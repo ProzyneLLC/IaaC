@@ -9,11 +9,11 @@ resource "azurerm_kubernetes_cluster" "prozyne-aks-dev" {
   resource_group_name   = var.resource_group_name
   dns_prefix            = "prozyne-aks-dev"
   kubernetes_version    =  var.kubernetes_version
-  private_dns_zone_id = "System"
-  private_cluster_enabled = false
-  private_cluster_public_fqdn_enabled = true
+  # private_dns_zone_id = "System"
+  # private_cluster_enabled = true
+  # private_cluster_public_fqdn_enabled = true
   azure_policy_enabled = false
-  http_application_routing_enabled = false
+  # http_application_routing_enabled = false
   oidc_issuer_enabled = false
   open_service_mesh_enabled = false
   role_based_access_control_enabled = true
