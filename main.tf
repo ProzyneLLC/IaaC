@@ -8,10 +8,14 @@ terraform {
 }
 
 provider "azurerm" {
-  # subscription_id = var.subscription_id
-  # client_id       = var.serviceprinciple_id
-  # client_secret   = var.serviceprinciple_key
-  # tenant_id       = var.tenant_id
-
   features {}
+}
+
+module "aks" {
+  source = "./modules/aks/"
+  # sp-clientId = var.sp-clientId
+  # sp-clientSecret = var.sp-clientSecret
+  # resource_location = var.resource_location
+  # kubernetes_version = var.kubernetes_version
+  # resource_group_name = var.resource_group_name
 }
