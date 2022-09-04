@@ -21,7 +21,7 @@ resource "azurerm_kubernetes_cluster" "prozyne-aks-dev" {
   
   default_node_pool {
     name       = "default"
-    node_count = 1
+    node_count = 2
     vm_size    = "Standard_B2s"
     type       = "VirtualMachineScaleSets"
     os_disk_size_gb = 50
