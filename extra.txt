@@ -1,0 +1,29 @@
+[
+    {
+    "cloudName": "AzureCloud",
+    "homeTenantId": "c66b6765-b794-4a2b-84ed-845b341c086a",
+    "id": "bfe9d21d-b148-4b5f-b061-767630d11ec0",
+    "isDefault": true,
+    "managedByTenants": [],
+    "name": "Azure for Students",
+    "state": "Enabled",
+    "tenantId": "c66b6765-b794-4a2b-84ed-845b341c086a",
+    "user": {
+        "name": "426194@student.fontys.nl",
+        "type": "user"
+        }
+    }
+
+{
+  "clientId": "4b174040-922e-49e7-8444-ce2522411b69",
+  "clientSecret": "hrV8Q~bDGaHXpZv6Tb1ZAfVT6XiC6fffipeMMaNL",
+  "subscriptionId": "bfe9d21d-b148-4b5f-b061-767630d11ec0",
+  "tenantId": "c66b6765-b794-4a2b-84ed-845b341c086a",
+  "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+  "resourceManagerEndpointUrl": "https://management.azure.com/",
+  "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+  "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+  "galleryEndpointUrl": "https://gallery.azure.com/",
+  "managementEndpointUrl": "https://management.core.windows.net/"
+}
+]
