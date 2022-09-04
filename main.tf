@@ -13,9 +13,12 @@ provider "azurerm" {
 
 module "aks" {
   source = "./modules/aks/"
-  # sp-clientId = var.sp-clientId
-  # sp-clientSecret = var.sp-clientSecret
-  # resource_location = var.resource_location
-  # kubernetes_version = var.kubernetes_version
-  # resource_group_name = var.resource_group_name
+}
+
+module "k8s" {
+  source = "./modules/k8s/"
+  host                  = "${module.aks.host}"
+  client_certificate    = "${base64decode(module.aks.client_certificate)}"
+  client_key            = "${base64decode(module.aks.client_key)}"
+  cluster_ca_certificate= "${base64decode(module.aks.cluster_ca_certificate)}"
 }
