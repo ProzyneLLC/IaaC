@@ -44,3 +44,4 @@ resource "azurerm_kubernetes_cluster" "prozyne-aks-dev" {
   }
 
 }
+
