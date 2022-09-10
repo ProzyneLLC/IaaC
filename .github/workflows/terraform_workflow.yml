@@ -46,6 +46,7 @@ jobs:
       run: terraform init
       env:
         TF_VAR_current_branch_name : ${{ steps.extract_branch.outputs.branch }}
+      working-directory: ./env/${{ steps.extract_branch.outputs.branch }}
       
 
     - name: Terraform Plan
@@ -84,11 +85,9 @@ jobs:
       run: terraform init
       env:
         TF_VAR_current_branch_name : ${{ steps.extract_branch.outputs.branch }}
-      working-directory: ./env/${{ steps.extract_branch.outputs.branch }}
 
 
     - name: Terraform Apply
       run: terraform apply -auto-approve #-input=false
       env:
         TF_VAR_current_branch_name : ${{ steps.extract_branch.outputs.branch }}
-      working-directory: ./env/${{ steps.extract_branch.outputs.branch }}
