@@ -1,4 +1,4 @@
-module "netowork" {
+module "network" {
   source = "../../modules/network"
 
   resource_group_name = "rg_${var.current_branch_name}_infra"
