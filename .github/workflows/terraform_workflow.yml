@@ -3,7 +3,7 @@ name: 'Terraform_Deploy_Azure'
 on:
   push:
     branches:
-    - "test"
+    - "testing"
   pull_request:
     branches:
     - "test"
