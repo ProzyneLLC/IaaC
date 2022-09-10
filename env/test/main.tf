@@ -1,6 +1,7 @@
 module "network" {
   source = "../../modules/network"
 
+  current_branch_name = var.current_branch_name
   resource_group_name = "rg_${var.current_branch_name}_infra"
   resource_location = var.resource_location
 }
