@@ -27,6 +27,11 @@ jobs:
         shell: bash
 
     steps:
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+
     - name: Checkout
       uses: actions/checkout@v3
 
@@ -38,9 +43,13 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
+      env:
+        TF_VAR_current_branch_name : ${{ steps.extract_branch.outputs.branch }}
 
     - name: Terraform Plan
       run: terraform plan -input=false
+      env:
+        TF_VAR_current_branch_name : ${{ steps.extract_branch.outputs.branch }}
 
 
 
@@ -55,6 +64,11 @@ jobs:
         shell: bash
 
     steps:
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+
     - name: Checkout
       uses: actions/checkout@v3
 
@@ -65,6 +79,11 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
+      env:
+        TF_VAR_current_branch_name : ${{ steps.extract_branch.outputs.branch }}
+
 
     - name: Terraform Apply
       run: terraform apply -auto-approve #-input=false
+      env:
+        TF_VAR_current_branch_name : ${{ steps.extract_branch.outputs.branch }}
