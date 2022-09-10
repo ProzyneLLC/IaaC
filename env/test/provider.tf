@@ -6,10 +6,10 @@ terraform {
     }
   }
     backend "azurerm" {
-      resource_group_name  = "rg_${var.current_branch_name}_infra"
+      resource_group_name  = "rg_test_infra"
       storage_account_name = "prozynetfstateacc"
       container_name       = "tfstate"
-      key                  = "${var.current_branch_name}.terraform.tfstate"
+      key                  = "test.terraform.tfstate"
     }
 }
 
