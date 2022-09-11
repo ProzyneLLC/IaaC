@@ -1,19 +1,45 @@
+###Enviroment Varibales###
+variable "current_branch_name" {
+    type = string
+}
+
+variable "sp_client_id" {
+    default = "4ee2b0fe-3be0-467e-8311-cceaa6b3c145"
+}
+
+variable "sp_client_secret" {
+    default = "Hu08Q~aiqTbWDllYFWQPxc5IwgnahuEjt~EkSbPF"
+}
+
+###Non secrete Variables###
 variable "resource_group_name" {
-    default = "prozyne-dev"
+    type = string
 }
 
 variable "resource_location" {
-    default = "West Europe"
+    type = string
 }
 
+###AKS Variables###
 variable "kubernetes_version" {
-    default = "1.23.8"
+    type = string
 }
 
-variable "sp-clientId" {
-    default = "4b174040-922e-49e7-8444-ce2522411b69"
+variable "aks_node_size" {
+    type = string
 }
 
-variable "sp-clientSecret" {
-    default = "hrV8Q~bDGaHXpZv6Tb1ZAfVT6XiC6fffipeMMaNL"
+variable "aks_node_type" {
+    type = string
+}
+
+variable "aks_node_count" {
+    type = number
+}
+
+variable "aks_node_disk_size" {
+    type = number
+}
+
+variable "aks_vnet_subnet_id" {
 }

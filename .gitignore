@@ -30,3 +30,4 @@ override.tf.json
 
 #for my self
 extra.txt
+**/secret_stuff/*

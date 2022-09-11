@@ -1,38 +1,41 @@
-provider "kubernetes" {
-    host                   =  var.host
-    client_certificate     =  var.client_certificate
-    client_key             =  var.client_key
-    cluster_ca_certificate =  var.cluster_ca_certificate
+resource "kubernetes_namespace" "nginx_1_namespace" {
+  metadata {
+    labels = {
+      app = "nginx1"
+    }
+    name = "nginx1-namespace"
+  }
 }
 
-resource "kubernetes_deployment" "example" {
+resource "kubernetes_deployment" "nginx_1" {
   metadata {
-    name = "terraform-example"
+    name = "nginx1"
+    namespace = "nginx1-namespace"
     labels = {
-      test = "MyExampleApp"
+      app = "nginx1"
     }
   }
 
   spec {
-    replicas = 3
+    replicas = 1
 
     selector {
       match_labels = {
-        test = "MyExampleApp"
+        app = "nginx1"
       }
     }
 
     template {
       metadata {
         labels = {
-          test = "MyExampleApp"
+          app = "nginx1"
         }
       }
 
       spec {
         container {
           image = "nginx:1.7.8"
-          name  = "example"
+          name  = "nginx1"
 
           resources {
             limits = {
@@ -44,40 +47,32 @@ resource "kubernetes_deployment" "example" {
               memory = "50Mi"
             }
           }
-
-          liveness_probe {
-            http_get {
-              path = "/nginx_status"
-              port = 80
-
-              http_header {
-                name  = "X-Custom-Header"
-                value = "Awesome"
-              }
-            }
-
-            initial_delay_seconds = 3
-            period_seconds        = 3
-          }
         }
       }
     }
   }
 }
 
-resource "kubernetes_service" "example" {
+resource "kubernetes_service" "service_nginx_1" {
+  depends_on = [kubernetes_deployment.nginx_1]
+
   metadata {
-    name = "terraform-example"
+    labels = {
+      app = "nginx1"
+    }
+    name = "service-nginx1"
+    namespace = "nginx1-namespace"
   }
+
   spec {
     selector = {
-      test = "MyExampleApp"
+      app = "nginx1"
     }
     port {
       port        = 80
       target_port = 80
     }
 
-    type = "LoadBalancer"
+    type = "ClusterIP"
   }
 }
