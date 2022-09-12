@@ -1,18 +1,18 @@
-resource "kubernetes_namespace" "nginx_1_namespace" {
+resource "kubernetes_namespace" "mcr1_namespace" {
   metadata {
     labels = {
-      app = "nginx1"
+      app = "mcr1"
     }
-    name = "nginx1-namespace"
+    name = "mcr1-namespace"
   }
 }
 
-resource "kubernetes_deployment" "nginx_1" {
+resource "kubernetes_deployment_v1" "mcr1" {
   metadata {
-    name = "nginx1"
-    namespace = "nginx1-namespace"
+    name = "mcr1"
+    namespace = "mcr1-namespace"
     labels = {
-      app = "nginx1"
+      app = "mcr1"
     }
   }
 
@@ -21,21 +21,31 @@ resource "kubernetes_deployment" "nginx_1" {
 
     selector {
       match_labels = {
-        app = "nginx1"
+        app = "mcr1"
       }
     }
 
     template {
       metadata {
         labels = {
-          app = "nginx1"
+          app = "mcr1"
         }
       }
 
       spec {
         container {
-          image = "nginx:1.7.8"
-          name  = "nginx1"
+          image = "mcr.microsoft.com/azuredocs/aks-helloworld:v1"
+          name  = "mcr1"
+
+          env {
+            name = "TITLE"
+            value = "Welcome to Azure Kubernetes Service (AKS)"
+          }
+
+          port {
+            container_port = 80
+            protocol = "TCP"
+          }
 
           resources {
             limits = {
@@ -47,29 +57,42 @@ resource "kubernetes_deployment" "nginx_1" {
               memory = "50Mi"
             }
           }
+
+          liveness_probe {
+            http_get {
+              path = "/"
+              port = 80
+            }
+
+            initial_delay_seconds = 30
+            period_seconds        = 60
+            timeout_seconds = 30
+            failure_threshold = 2
+          }
         }
       }
     }
   }
 }
 
-resource "kubernetes_service" "service_nginx_1" {
-  depends_on = [kubernetes_deployment.nginx_1]
+resource "kubernetes_service_v1" "service_mcr1" {
+  depends_on = [kubernetes_deployment_v1.mcr1]
 
   metadata {
+    name = "service-mcr1"
+    namespace = "mcr1-namespace"
     labels = {
-      app = "nginx1"
+      app = "mcr1"
     }
-    name = "service-nginx1"
-    namespace = "nginx1-namespace"
   }
 
   spec {
     selector = {
-      app = "nginx1"
+      app = "mcr1"
     }
     port {
       port        = 80
+      protocol = "TCP"
       target_port = 80
     }
 

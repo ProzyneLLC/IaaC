@@ -41,7 +41,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   network_profile {
-    network_plugin = "azure"###########################################maybe vnet not setup correctly, check kubnet###############################################################
+    network_plugin = "kubenet"###########################################maybe vnet not setup correctly, check kubnet###############################################################
     load_balancer_sku = "basic"
   }
 

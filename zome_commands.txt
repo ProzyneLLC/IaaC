@@ -1,0 +1,53 @@
+RESOURCE_GROUP_NAME=rg_test_infra
+STORAGE_ACCOUNT_NAME=prozynetfstateacc
+CONTAINER_NAME=tfstate
+
+# Create resource group
+az group create --name $RESOURCE_GROUP_NAME --location westeurope
+
+# Create storage account
+az storage account create --resource-group $RESOURCE_GROUP_NAME --name $STORAGE_ACCOUNT_NAME --sku Standard_LRS --encryption-services blob
+
+# Create blob container
+az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOUNT_NAME
+
+ACCOUNT_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP_NAME --account-name $STORAGE_ACCOUNT_NAME --query '[0].value' -o tsv)
+
+export ARM_ACCESS_KEY=$(az keyvault secret show --name terraform-backend-key --vault-name prozyne-dev-key-vault --query value -o tsv)\
+
+
+
+
+---
+az ad sp create-for-rbac --name "SP-tf-pipeline" --role contributor --scopes /subscriptions/bfe9d21d-b148-4b5f-b061-767630d11ec0/resourceGroups/rg_test_infra --sdk-auth
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+az account set --subscription bfe9d21d-b148-4b5f-b061-767630d11ec0
+az aks get-credentials --resource-group rg_test_infra --name test-aks
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# List all deployments in all namespaces
+kubectl get deployments --all-namespaces=true
+
+kubectl get pods --all-namespaces
+kubectl describe pod mcr1-56dc99c97b-2p8rj -n mcr1-namespace
+10.244.0.14
+80/TCP
+
+kubectl get svc --all-namespaces
+kubectl describe svc service-mcr1 -n mcr1-namespace
+IP:                10.0.198.148
+Port:              <unset>  80/TCP
+TargetPort:        80/TCP
+Endpoints:         10.244.0.14:80
+
+kubectl get ing --all-namespaces
+kubectl describe ing ingress -n mcr1-namespace
+Default backend:  <default>
+  Host        Path  Backends
+  ----        ----  --------
+  *
+              /hello   service-mcr1:80 (10.244.0.14:80)
+
