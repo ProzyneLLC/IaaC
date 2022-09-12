@@ -6,11 +6,12 @@ depends_on = [ azurerm_public_ip.cluster-pub-ip ]
 }
 
 resource "helm_release" "nginx_ingress" {
-    name             = "${var.nginx_helm_name}"
-    repository       = "${var.nginx_helm_repository}"
-    chart            = "${var.nginx_helm_chart}"
-    namespace        = "${var.nginx_helm_namespace}"
-    create_namespace = "${var.nginx_helm_create_namespace}"
+  depends_on = [ azurerm_public_ip.cluster-pub-ip ]
+  name             = "${var.nginx_helm_name}"
+  repository       = "${var.nginx_helm_repository}"
+  chart            = "${var.nginx_helm_chart}"
+  namespace        = "${var.nginx_helm_namespace}"
+  create_namespace = "${var.nginx_helm_create_namespace}"
 
   set {
     name  = "controller.replicaCount"
@@ -40,6 +41,4 @@ resource "helm_release" "nginx_ingress" {
     name  = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/azure-load-balancer-resource-group\""
     value = "${var.nginx_ingress_controller_service_annotations}"
   }
-
-depends_on = [ azurerm_public_ip.cluster-pub-ip ]
 }
