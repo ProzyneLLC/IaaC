@@ -1,18 +1,18 @@
-resource "kubernetes_namespace" "mcr1_namespace" {
+resource "kubernetes_namespace" "nginx_namespace" {
   metadata {
     labels = {
-      app = "mcr1"
+      app = "nginx"
     }
-    name = "mcr1-namespace"
+    name = "nginx-namespace"
   }
 }
 
-resource "kubernetes_deployment_v1" "mcr1" {
+resource "kubernetes_deployment_v1" "nginx" {
   metadata {
-    name = "mcr1"
-    namespace = "mcr1-namespace"
+    name = "nginx"
+    namespace = "nginx-namespace"
     labels = {
-      app = "mcr1"
+      app = "nginx"
     }
   }
 
@@ -21,26 +21,21 @@ resource "kubernetes_deployment_v1" "mcr1" {
 
     selector {
       match_labels = {
-        app = "mcr1"
+        app = "nginx"
       }
     }
 
     template {
       metadata {
         labels = {
-          app = "mcr1"
+          app = "nginx"
         }
       }
 
       spec {
         container {
-          image = "mcr.microsoft.com/azuredocs/aks-helloworld:v1"
-          name  = "mcr1"
-
-          env {
-            name = "TITLE"
-            value = "Welcome to Azure Kubernetes Service (AKS)"
-          }
+          image = "nginx:1.14.2"
+          name = "nginx"
 
           port {
             container_port = 80
@@ -75,20 +70,20 @@ resource "kubernetes_deployment_v1" "mcr1" {
   }
 }
 
-resource "kubernetes_service_v1" "service_mcr1" {
-  depends_on = [kubernetes_deployment_v1.mcr1]
+resource "kubernetes_service_v1" "service_nginx" {
+  depends_on = [kubernetes_deployment_v1.nginx]
 
   metadata {
-    name = "service-mcr1"
-    namespace = "mcr1-namespace"
+    name = "service-nginx"
+    namespace = "nginx-namespace"
     labels = {
-      app = "mcr1"
+      app = "nginx"
     }
   }
 
   spec {
     selector = {
-      app = "mcr1"
+      app = "nginx"
     }
     port {
       port        = 80

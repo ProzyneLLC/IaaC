@@ -3,14 +3,6 @@ variable "current_branch_name" {
     type = string
 }
 
-variable "sp_client_id" {
-    default = "4ee2b0fe-3be0-467e-8311-cceaa6b3c145"
-}
-
-variable "sp_client_secret" {
-    default = "Hu08Q~aiqTbWDllYFWQPxc5IwgnahuEjt~EkSbPF"
-}
-
 ###Non secrete Variables###
 variable "resource_group_name" {
     type = string
@@ -41,5 +33,13 @@ variable "aks_node_disk_size" {
     type = number
 }
 
-variable "aks_vnet_subnet_id" {
+variable "aks_network_plugin" {
+    type = string
 }
+
+variable "aks_load_balancer_sku" {
+    type = string
+}
+
+# variable "aks_vnet_subnet_id" {
+# }

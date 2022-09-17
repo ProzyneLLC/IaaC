@@ -22,5 +22,4 @@ resource "azurerm_subnet" "aks_subnet" {
   resource_group_name = var.resource_group_name
   address_prefixes     = [module.subnet_addrs.networks[0].cidr_block]
   virtual_network_name = azurerm_virtual_network.aks_virtual_network.name
-  # service_endpoints    = ["Microsoft.Sql"]
 }
