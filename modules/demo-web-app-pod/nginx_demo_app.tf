@@ -18,7 +18,6 @@ resource "kubernetes_deployment_v1" "nginx" {
 
   spec {
     replicas = 1
-
     selector {
       match_labels = {
         app = "nginx"
@@ -33,6 +32,9 @@ resource "kubernetes_deployment_v1" "nginx" {
       }
 
       spec {
+        node_selector = {
+          "nodeLabel" = "user"
+        }
         container {
           image = "nginx:1.14.2"
           name = "nginx"

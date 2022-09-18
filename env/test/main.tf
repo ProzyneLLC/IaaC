@@ -15,16 +15,25 @@ module "aks" {
 
   #AKS configuration
   kubernetes_version = "1.23.8"
+  azure_policy_enabled = false
+  oidc_issuer_enabled = false
   
-  #Default node
-  aks_node_size      = "Standard_B2s"
-  aks_node_type      = "VirtualMachineScaleSets"
-  aks_node_count     = 1
-  aks_node_disk_size = 50
+  #Default node pool
+  aks_d_node_name = "default"
+  aks_d_node_size      = "Standard_B2s"
+  aks_d_node_type      = "VirtualMachineScaleSets"
+  aks_d_node_count     = 1
+  aks_d_node_disk_size = 50
+
+  #User node pool
+  aks_u_node_name = "user"
+  aks_u_node_size = "Standard_B2s"
+  aks_u_node_count = 1
+  aks_u_node_disk_size = 50
 
   #AKS network profile
   aks_network_plugin = "kubenet"
-  aks_load_balancer_sku = "basic"
+  aks_load_balancer_sku = "standard"
 }
 
 module "acr" {
